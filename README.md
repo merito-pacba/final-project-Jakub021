@@ -19,6 +19,18 @@ If you want to test this app on your computer, you have to:
     CONN_STR="Driver={ODBC Driver 18 for SQL Server};Server=tcp:mydbsrv.database.windows.net,1433;Database=mydb;Uid=myadmin;Pwd=mypassw23!;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
     ```
 
+    *Warning:* If you get an error stating lack of SQL driver, you can find the driver available in your system in the following way:
+
+    ```
+    python
+    >>> import pyodbc
+    >>> pyodbc.drivers()
+    ['SQL Server', 'Microsoft Access Driver (*.mdb, *.accdb)', 'Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)', 'Microsoft Access Text Driver (*.txt, *.csv)']
+    >>> exit()
+    ```
+    
+    In such a case, replace `Driver={ODBC Driver 18 for SQL Server}` with `Driver={SQL Server}`
+
 5. Create `.flaskenv` file in the main folder of the project, and paste the following content inside:
 
     ```
