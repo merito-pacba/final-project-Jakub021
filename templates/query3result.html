@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <title>Query with template</title>
+</head>
+
+<body>
+    <h1>Better Query 3</h1>
+    <table>
+        <tr>
+            <td>Street</td>
+            <td>City</td>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.AddressLine1 }}</td>
+            <td>{{ row.City }}</td>
+            <td><a href="/edit/{{ row.AddressID }}">Edit</a></td>
+            <td><a href="/delete/{{ row.AddressID }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="/insert">Add new address</a></p>
+</body>
+
+</html>

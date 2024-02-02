@@ -1,0 +1,17 @@
+<html>
+
+<head>
+    <title>Edit address</title>
+</head>
+
+<body>
+
+    <h1>Edit address</h1>
+    <form action="/edit/{{ row.AddressID }}" method=POST>
+        <p><input type="text" name="addressline1" value="{{ row.AddressLine1 }}" /></p>
+        <p><input type="text" name="city" value="{{ row.City }}" /></p>
+        <p><input type="submit" value="Update" /></p>
+    </form>
+</body>
+
+</html>
