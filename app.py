@@ -1,4 +1,3 @@
-"A"
 import os
 
 import pyodbc
