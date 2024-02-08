@@ -88,15 +88,23 @@ def edit(address_id):
         return redirect(url_for('query3'))
 
 
-@app.route("/delete/<int:address_id>")
+@app.route("/delete/<int:address_id>", methods=['POST'])
 def delete_address(address_id):
     conn_str = os.environ.get("CONN_STR")
     conn = pyodbc.connect(conn_str)
-    with conn.cursor() as cursor:
-        cursor.execute("DELETE FROM [SalesLT].[Address] WHERE [AddressID] = ?", (address_id,))
-        conn.commit()
-    conn.close()
-    return redirect(url_for('query2'))
+
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("DELETE FROM [SalesLT].[CustomerAddress] WHERE [AddressID] = ?", (address_id,))
+            cursor.execute("DELETE FROM [SalesLT].[Address] WHERE [AddressID] = ?", (address_id,))
+            conn.commit()
+            return redirect(url_for('query2'))
+    except pyodbc.IntegrityError as e:
+        conn.rollback()
+        print("IntegrityError:", e)
+        return "Error: This address is referenced by other records and cannot be deleted."
+    finally:
+        conn.close()
 
 
 @app.route("/insert", methods=['POST', 'GET'])
