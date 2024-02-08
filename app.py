@@ -1,7 +1,9 @@
+"app.py"
 import os
+
 import pyodbc
-from flask import Flask, render_template, request, url_for, redirect
 from dotenv import load_dotenv
+from flask import Flask, render_template, request, url_for, redirect
 
 load_dotenv()
 
@@ -9,6 +11,7 @@ port = os.environ.get("PORT", "5000")
 
 app = Flask(__name__)
 
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
 @app.route("/")
 def index():
