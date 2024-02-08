@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Address</title>
+    <title>Search Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
         body {
@@ -14,13 +14,13 @@
         }
 
         .container {
-            width: 25%;
+            width: 80%;
             margin: auto;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             margin-top: 20px;
             position: relative;
-            min-height: 30vh;
+            min-height: 100vh;
         }
 
         .header {
@@ -28,13 +28,15 @@
             color: #fff;
             padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
+        }
+
+        .content {
+            margin-top: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
 
         th, td {
@@ -61,50 +63,43 @@
         .main-btn:hover {
             background-color: #191970;
         }
-
-        .content {
-            margin-top: 20px;
-        }
-
-        input[type=text], input[type=submit] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0 20px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type=submit] {
-            background-color: #1E90FF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type=submit]:hover {
-            background-color: #191970;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1>Edit Address</h1>
+        <h1>Search Results</h1>
     </div>
+
 
     <div class="content">
-        <form action="/edit/{{ row.AddressID }}" method="POST">
-            <input type="text" name="addressline1" value="{{ row.AddressLine1 }}" placeholder="Address Line 1">
-            <input type="text" name="city" value="{{ row.City }}" placeholder="City">
-            <input type="submit" value="Update">
+        <form action="/search" method="GET">
+            <input type="text" name="query" placeholder="Search...">
+            <input type="submit" value="Search">
         </form>
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Address ID</th>
+                    <th>Address Line 1</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.AddressID }}</td>
+                    <td>{{ row.AddressLine1 }}</td>
+                    <td>{{ row.City }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-
 
 <a href="/" class="main-btn">Back to Main Site</a>
 

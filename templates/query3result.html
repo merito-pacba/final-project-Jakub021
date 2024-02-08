@@ -1,26 +1,152 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Query with template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{{ url_for('static', filename='back.jpg') }}');
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .main-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+        }
+
+        .main-btn:hover {
+            background-color: #191970;
+        }
+
+        .content {
+            margin-top: 20px;
+        }
+
+        input[type=text], input[type=submit] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #191970;
+        }
+
+        .edit-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .edit-btn:hover {
+            background-color: #191970;
+        }
+    </style>
 </head>
-
 <body>
-    <h1>Better Query 3</h1>
-    <table>
-        <tr>
-            <td>Street</td>
-            <td>City</td>
-        </tr>
-        {% for row in rows %}
-        <tr>
-            <td>{{ row.AddressLine1 }}</td>
-            <td>{{ row.City }}</td>
-            <td><a href="/edit/{{ row.AddressID }}">Edit</a></td>
-            <td><a href="/delete/{{ row.AddressID }}">Delete</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p><a href="/insert">Add new address</a></p>
-</body>
 
+<div class="container">
+    <div class="header">
+        <h1>Add Data</h1>
+    </div>
+
+    <div class="content">
+        <form action="/insert" method="POST">
+            <input type="text" name="addressline1" placeholder="Address Line 1">
+            <input type="text" name="city" placeholder="City">
+            <input type="submit" value="Add">
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Address ID</th>
+                    <th>Address Line 1</th>
+                    <th>City</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.AddressID }}</td>
+                    <td>{{ row.AddressLine1 }}</td>
+                    <td>{{ row.City }}</td>
+                    <td>
+                        <form action="/edit/{{ row.AddressID }}" method="GET">
+                            <button type="submit" class="edit-btn">Edit</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a href="/" class="main-btn">Back to Main Site</a>
+
+</body>
 </html>
